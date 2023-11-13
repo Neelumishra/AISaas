@@ -6,7 +6,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {Badge} from "@/components/ui/badge"
-import React from 'react'
+import React, { useState } from 'react'
 import { useProModal } from '@/hooks/use-pro-modal';
 import { DialogDescription } from "@radix-ui/react-dialog";
 import {
@@ -23,10 +23,27 @@ import {
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 
-function ProModal() {
+ function ProModal() {
   const useModal = useProModal();
+  const [loading, setLoading] = useState(false)
+  
+  const onSubscribe = async() =>{
+     try {
+       setLoading(true);
+       const response = await axios.get("/api/stripe");
+       window.location.href = response.data.url;
+     } catch (error) {
+       
+        toast.error("Something went wrong")
+      
+     } finally {
+       setLoading(false);
+     }
+  }
    const tools = [
      {
        label: "Conversation",
@@ -94,7 +111,13 @@ function ProModal() {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button className="w-full border-0" variant="premium" size="lg">
+          <Button
+            disabled = {loading}
+            className="w-full border-0"
+            variant="premium"
+            size="lg"
+            onClick={onSubscribe}
+          >
             Upgrade
             <Zap className="w-4 h-4 ml-2 fill-white" />
           </Button>

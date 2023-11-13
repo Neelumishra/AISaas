@@ -16,6 +16,7 @@ import { ChatCompletionRequestMessage } from "openai";
 import axios from "axios";
 import Loader from "@/components/loader";
 import { useProModal } from "@/hooks/use-pro-modal";
+import toast from "react-hot-toast";
 
 function MusicPage() {
   const useModal = useProModal()
@@ -38,6 +39,8 @@ function MusicPage() {
     } catch (e: any) {
       if (e?.response?.status === 403) {
         useModal.onOpen();
+      } else {
+        toast.error("Something went wrong");
       }
     } finally {
       router.refresh();

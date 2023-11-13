@@ -19,6 +19,7 @@ import { cn } from "@/lib/utils";
 import Useravatar from "@/components/useravatar";
 import BotAvatar from "@/components/botavatar";
 import { useProModal } from "@/hooks/use-pro-modal";
+import toast from "react-hot-toast";
 function conversationPage() {
   const router = useRouter();
   const [message, setMessage] = useState<ChatCompletionRequestMessage[]>([]);
@@ -51,6 +52,8 @@ function conversationPage() {
     } catch (e:any) {
       if(e?.response?.status === 403){
           useModal.onOpen()
+      }else{
+        toast.error("Something went wrong")
       }
     } finally {
       router.refresh()

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 // interface userApiLimit {
 //   userApiLimit : number
 // }
-function Mobilesidebar({ apiLimitCount }: { apiLimitCount: number }) {
+function Mobilesidebar({ apiLimitCount }: { apiLimitCount: number,isPro:boolean }) {
   const [Ismounted, setIsmounted] = useState(false);
 
   useEffect(() => setIsmounted(true), []);
@@ -23,7 +23,7 @@ function Mobilesidebar({ apiLimitCount }: { apiLimitCount: number }) {
         </Button>
       </SheetTrigger>
       <SheetContent className="p-0" side={"left"}>
-        <Sidebar apiLimitCount={apiLimitCount} />
+        <Sidebar apiLimitCount={apiLimitCount} isPro={isPro}/>
       </SheetContent>
     </Sheet>
   );
